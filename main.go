@@ -4,12 +4,13 @@ import (
 	
 		"os"
 		"fmt" 
+		"time"
 	)
 
 
 func main() {
 	
-	getDownloadsDir()
+	getFileCreationTime()
 }
 
 
@@ -29,7 +30,7 @@ func getDownloadsDir() string  {
 		panic(err)
 	}
 
-	downloadDirInfo, err := os.Stat(downloadDir)
+	_, err = os.Stat(downloadDir)
 
 	if (err != nil) {
 
@@ -40,8 +41,27 @@ func getDownloadsDir() string  {
 		panic(err)
 	}
 
-	fmt.Println(downloadDirInfo.IsDir())
+	return downloadDir
+}
 
-	return ""
+
+func getFileCreationTime() {
+
+	//	iterate through the .mkv, .mp4 and .srt files in the directory
+	//	if they are beyond 2 weeks, delete them
+
+	file := getDownloadsDir() + "/Rabbit Hole S01E03 - The Algorithms of Control (NetNaija.com).mkv"
+
+	fileInfo, err := os.Stat(file)
+
+	if (err != nil) {
+		panic(err)
+	}
+
+	fmt.Println(fileInfo.ModTime())
+
+
+
+
 }
 
