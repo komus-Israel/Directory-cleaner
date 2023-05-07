@@ -58,7 +58,30 @@ func getFileCreationTime() {
 		panic(err)
 	}
 
+	currentTime := time.Now()
+
+	fmt.Println(time.Now())
+
 	fmt.Println(fileInfo.ModTime())
+
+	duration := currentTime.Sub(fileInfo.ModTime())
+
+	fmt.Println(duration)
+
+
+	twoWeeks, err := time.ParseDuration("336h") //	2 weeks
+
+	if (err != nil) {
+		panic(err)
+	}
+
+	if (duration > twoWeeks) {
+		fmt.Println("This file is greeter than two weeks")
+	} else {
+		fmt.Println("This file isn't up to two weeks")
+	}
+
+	
 
 
 
