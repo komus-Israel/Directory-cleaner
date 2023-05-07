@@ -10,7 +10,7 @@ import (
 
 func main() {
 	
-	getFileCreationTime()
+	action()
 }
 
 
@@ -45,12 +45,11 @@ func getDownloadsDir() string  {
 }
 
 
-func getFileCreationTime() {
+func evaluateFileDuration( file string ) bool {
 
 	//	iterate through the .mkv, .mp4 and .srt files in the directory
 	//	if they are beyond 2 weeks, delete them
 
-	file := getDownloadsDir() + "/Rabbit Hole S01E03 - The Algorithms of Control (NetNaija.com).mkv"
 
 	fileInfo, err := os.Stat(file)
 
@@ -60,14 +59,7 @@ func getFileCreationTime() {
 
 	currentTime := time.Now()
 
-	fmt.Println(time.Now())
-
-	fmt.Println(fileInfo.ModTime())
-
 	duration := currentTime.Sub(fileInfo.ModTime())
-
-	fmt.Println(duration)
-
 
 	twoWeeks, err := time.ParseDuration("336h") //	2 weeks
 
@@ -75,16 +67,20 @@ func getFileCreationTime() {
 		panic(err)
 	}
 
-	if (duration > twoWeeks) {
-		fmt.Println("This file is greeter than two weeks")
-	} else {
-		fmt.Println("This file isn't up to two weeks")
-	}
+	return duration > twoWeeks
 
 	
+}
 
 
+func action() {
 
+	file := getDownloadsDir() + "/Rabbit Hole S01E03 - The Algorithms of Control (NetNaija.com).mkv"
+
+
+	isMoreThanTwoWeeks := evaluateFileDuration(file)
+
+	fmt.Println(isMoreThanTwoWeeks)
 
 }
 
