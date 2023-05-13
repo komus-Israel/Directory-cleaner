@@ -93,10 +93,34 @@ func action() {
 
 func getMatchingFileNames() {
 
-	folder := getDownloadsDir()
+	dir := getDownloadsDir()
 	
-	extensions := []string{".mkv", ".mp4", ".srt"}
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 
+		//	get the extension of the path
+		ext := filepath.Ext( path )
+
+		if (ext == ".mp4" || ext == ".mkv" || ext == ".srt") {
+
+			fmt.Println(path)
+			isDueForDeletion := evaluateFileDuration(path)
+
+			fmt.Println(path, " -----> ", isDueForDeletion)
+
+		}
+		
+
+		if (err != nil) {
+			return err
+		}
+
+		return nil
+		
+	})
+
+	if (err != nil) {
+		panic(err)
+	}
 
 
 
