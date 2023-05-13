@@ -12,6 +12,11 @@ import (
 	
 )
 
+/**
+
+	Function to get the path for the Downloads directory
+
+*/
 
 func getDownloadsDir() string  {
 
@@ -69,21 +74,32 @@ func evaluateFileDuration( fileInfo os.FileInfo ) bool {
 }
 
 
-func getMatchingFileNames() {
+func deleteDueFiles() {
 
+	//	initialize the path to the Downloads path
 	dir := getDownloadsDir()
 	
+	//	iterate through the files in the Downloads directory
 	err := filepath.Walk(dir, func(path string, fileInfo os.FileInfo, err error) error {
 
-		//	get the extension of the path
+		//	get the extension of the file path
 		ext := filepath.Ext( path )
 
+		//	if the extention is .mp4/ .mkv/ .srt, remove the files
 		if (ext == ".mp4" || ext == ".mkv" || ext == ".srt") {
 
-			fmt.Println(path)
+			
 			isDueForDeletion := evaluateFileDuration( fileInfo )
 
-			fmt.Println(path, " -----> ", isDueForDeletion)
+			//	if it is due for deletion, then delete
+			if (isDueForDeletion == true) {
+
+				err := os.Remove(path)
+
+				if (err != nil) {
+					panic(err)
+				}
+			}		
 
 		}
 		
@@ -92,6 +108,7 @@ func getMatchingFileNames() {
 			return err
 		}
 
+		//	the iteration returns nil if there are no errors
 		return nil
 		
 	})
@@ -105,6 +122,10 @@ func getMatchingFileNames() {
 }
 
 
-func Execute() {
-	getMatchingFileNames()
+func Execute()  {
+
+	//	delete the due files
+	deleteDueFiles()
+
+	
 }
