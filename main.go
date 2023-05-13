@@ -6,13 +6,16 @@ import (
 		"fmt" 
 		"time"
 		"path/filepath"
+		"cleaner/test"
+		
 	)
 
 
 func main() {
 	
 	//action()
-	getMatchingFileNames()
+	//getMatchingFileNames()
+	te()
 }
 
 
