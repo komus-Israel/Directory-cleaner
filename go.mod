@@ -1,3 +1,3 @@
-module github.com/komus-Israel/Directory-cleaner
+module cleaner
 
 go 1.20

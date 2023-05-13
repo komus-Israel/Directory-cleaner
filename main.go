@@ -1,13 +1,19 @@
 package main 
 
+import (
+
+
+    "cleaner/utils" 
+
+)
+
 
 
 
 func main() {
 	
-	//action()
-	//getMatchingFileNames()
-	te()
+	utils.Execute()
+
 }
 
 

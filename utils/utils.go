@@ -1,3 +1,7 @@
+package utils 
+
+
+
 import ( 
 	
 	"os"
@@ -98,4 +102,9 @@ func getMatchingFileNames() {
 
 
 
+}
+
+
+func Execute() {
+	getMatchingFileNames()
 }
