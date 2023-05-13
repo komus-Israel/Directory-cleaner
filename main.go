@@ -47,17 +47,10 @@ func getDownloadsDir() string  {
 }
 
 
-func evaluateFileDuration( file string ) bool {
+func evaluateFileDuration( fileInfo os.FileInfo ) bool {
 
 	//	iterate through the .mkv, .mp4 and .srt files in the directory
 	//	if they are beyond 2 weeks, delete them
-
-	//	get file info
-	fileInfo, err := os.Stat(file)
-
-	if (err != nil) {
-		panic(err)
-	}
 
 
 	//	get current time
@@ -80,22 +73,11 @@ func evaluateFileDuration( file string ) bool {
 }
 
 
-func action() {
-
-	file := getDownloadsDir() + "/Rabbit Hole S01E03 - The Algorithms of Control (NetNaija.com).mkv"
-
-
-	isMoreThanTwoWeeks := evaluateFileDuration(file)
-
-	fmt.Println(isMoreThanTwoWeeks)
-
-}
-
 func getMatchingFileNames() {
 
 	dir := getDownloadsDir()
 	
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(dir, func(path string, fileInfo os.FileInfo, err error) error {
 
 		//	get the extension of the path
 		ext := filepath.Ext( path )
@@ -103,7 +85,7 @@ func getMatchingFileNames() {
 		if (ext == ".mp4" || ext == ".mkv" || ext == ".srt") {
 
 			fmt.Println(path)
-			isDueForDeletion := evaluateFileDuration(path)
+			isDueForDeletion := evaluateFileDuration( fileInfo )
 
 			fmt.Println(path, " -----> ", isDueForDeletion)
 
