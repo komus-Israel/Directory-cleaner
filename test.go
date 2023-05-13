@@ -1,9 +1,9 @@
-package te
+package test
 
 
 import "fmt"
 
 
-func te() {
-	fmt.Println("Testes")
+func getTest() {
+	fmt.Println("Test worked")
 }
